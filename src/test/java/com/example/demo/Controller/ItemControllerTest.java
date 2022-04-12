@@ -35,14 +35,13 @@ class ItemControllerTest {
     public void init(){
         Item i1 = new Item(1L, "Gräsklippare" , "-2020");
         when(itemRepo.findItemByName("Gräsklippare")).thenReturn(i1);
-
     }
     @Autowired
     private MockMvc mvc;
 
     @Test
     void getItemByName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/items/name").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/items/Gräsklippare").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":1,\"name\":\"Gräsklippare\",\"articleNr\":\"-2020\"}"));
     }
