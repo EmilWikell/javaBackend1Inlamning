@@ -19,4 +19,9 @@ public class ItemController {
     public Item getItemByName(@PathVariable String name){
         return itemRepo.findItemByName(name);
     }
+
+    @RequestMapping("")
+    public Iterable<Item> getAllItems(){
+        return itemRepo.findAll();
+    }
 }
