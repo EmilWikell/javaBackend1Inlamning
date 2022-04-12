@@ -37,8 +37,8 @@ class ItemControllerTest {
 
     @BeforeEach
     public void init(){
-        Item i1 = new Item(1L, "Gräsklippare" , "-2020");
         Item i0 = new Item(1L, "Hammare" , "-2020");
+        Item i1 = new Item(1L, "Gräsklippare" , "-2020");
         Item i2 = new Item(2L, "Spik" , "-2021");
         Item i3 = new Item(3L, "Yxa" , "-2022");
         when(itemRepo.findItemByName("Gräsklippare")).thenReturn(i1);

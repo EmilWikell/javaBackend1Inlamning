@@ -35,11 +35,19 @@ class CustomerControllerTest {
         Customer p2 = new Customer(2L, "Stina" , "Backen 32");
         Customer p3 = new Customer(3L, "Maja" , "Stigen 64");
         when(customerRepo.findAll()).thenReturn(Arrays.asList(p1,p2,p3));
+        when(customerRepo.findById(1L)).thenReturn(Optional.of(p1));
 
     }
 
     @Autowired
     private MockMvc mvc;
+
+    @Test
+    void getCustomerById() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/customers/1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("{\"id\":1,\"name\":\"Magnus\",\"address\":\"Gatan 3\"}")));
+    }
 
     @Test
     void getAllCustomers() throws Exception {
