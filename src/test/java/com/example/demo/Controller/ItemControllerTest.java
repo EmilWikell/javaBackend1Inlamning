@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -27,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class ItemControllerTest {
 
+    @Autowired
+    private MockMvc mvc;
+
     @MockBean
     private ItemRepo itemRepo;
 
@@ -34,16 +38,32 @@ class ItemControllerTest {
     @BeforeEach
     public void init(){
         Item i1 = new Item(1L, "Gräsklippare" , "-2020");
+        Item i0 = new Item(1L, "Hammare" , "-2020");
+        Item i2 = new Item(2L, "Spik" , "-2021");
+        Item i3 = new Item(3L, "Yxa" , "-2022");
         when(itemRepo.findItemByName("Gräsklippare")).thenReturn(i1);
+        when(itemRepo.findAll()).thenReturn(List.of(i0, i2, i3));
 
     }
-    @Autowired
-    private MockMvc mvc;
 
     @Test
     void getItemByName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/items/name").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/items/Gräsklippare").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":1,\"name\":\"Gräsklippare\",\"articleNr\":\"-2020\"}"));
     }
+
+    @Test
+    void getAllItems() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/items").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[" +
+                        "{\"id\":1,\"name\":\"Hammare\",\"articleNr\":\"-2020\"}," +
+                        "{\"id\":2,\"name\":\"Spik\",\"articleNr\":\"-2021\"}," +
+                        "{\"id\":3,\"name\":\"Yxa\",\"articleNr\":\"-2022\"}" +
+                        "]")));
+
+    }
+
+
 }
