@@ -25,4 +25,10 @@ public class Customer {
     public Customer() {
 
     }
+
+    public Customer(long id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
 }

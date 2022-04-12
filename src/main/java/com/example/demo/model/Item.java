@@ -25,4 +25,10 @@ public class Item {
     public Item() {
 
     }
+
+    public Item(long id, String name, String articleNr) {
+        this.id = id;
+        this.name = name;
+        this.articleNr = articleNr;
+    }
 }
