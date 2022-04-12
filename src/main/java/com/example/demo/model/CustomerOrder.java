@@ -30,5 +30,6 @@ public class CustomerOrder {
     }
 
     public CustomerOrder() {
+
     }
 }
