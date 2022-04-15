@@ -23,13 +23,17 @@ public class CustomerOrder {
     private Item item;
 
 
-    public CustomerOrder(String orderNr, Customer customer, Item item) {
-        this.orderNr = orderNr;
+    public CustomerOrder(Customer customer, Item item) {
         this.customer = customer;
         this.item = item;
     }
 
     public CustomerOrder() {
+    }
 
+    public CustomerOrder(long id, Customer customer, Item item) {
+        this.Id = id;
+        this.customer = customer;
+        this.item = item;
     }
 }
