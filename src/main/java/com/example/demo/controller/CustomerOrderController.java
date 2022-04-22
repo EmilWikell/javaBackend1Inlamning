@@ -14,15 +14,15 @@ import java.util.List;
 public class CustomerOrderController {
 
     @Autowired
-    CustomerOrderRepo customerOrderReop;
+    CustomerOrderRepo customerOrderRepo;
 
     @RequestMapping("")
     public Iterable<CustomerOrder> getAllCustomerOrders() {
-        return customerOrderReop.findAll();
+        return customerOrderRepo.findAll();
     }
 
     @RequestMapping("/{customerId}")
     public List<CustomerOrder> getAllCustomerOrdersByCustomerId(@PathVariable Long customerId){
-        return customerOrderReop.findByCustomerId(customerId);
+        return customerOrderRepo.findByCustomerId(customerId);
     }
 }

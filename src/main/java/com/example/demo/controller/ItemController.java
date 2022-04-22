@@ -25,9 +25,9 @@ public class ItemController {
     @Autowired
     CustomerRepo customerRepo;
 
-    @RequestMapping("/{name}")
-    public Item getItemByName(@PathVariable String name){
-        return itemRepo.findItemByName(name);
+    @RequestMapping("/{id}")
+    public Item getItemById(@PathVariable Long id){
+        return itemRepo.findById(id).get();
     }
 
 
@@ -53,7 +53,7 @@ public class ItemController {
         return itemRepo.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public String addItem(@RequestBody Item item){
         itemRepo.save(item);
         return "Item added";

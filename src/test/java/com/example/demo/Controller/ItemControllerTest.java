@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,8 +57,8 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemByName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/items/Gräsklippare").accept(MediaType.APPLICATION_JSON))
+    void getItemById() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/items/1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":1,\"name\":\"Gräsklippare\",\"articleNr\":\"-2020\"}"));
     }
