@@ -106,5 +106,4 @@ class ItemControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(equalTo("Item added")));
     }
-
 }
