@@ -22,6 +22,12 @@ public class CustomerOrder {
     @JoinColumn
     private Item item;
 
+    public CustomerOrder(long id, String orderNr, Customer customer, Item item) {
+        this.Id = id;
+        this.orderNr = orderNr;
+        this.customer = customer;
+        this.item = item;
+    }
 
     public CustomerOrder(Customer customer, Item item) {
         this.customer = customer;
@@ -36,4 +42,6 @@ public class CustomerOrder {
         this.customer = customer;
         this.item = item;
     }
+
+
 }

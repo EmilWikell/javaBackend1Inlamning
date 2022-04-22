@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.criteria.Order;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/items")
@@ -45,5 +46,16 @@ public class ItemController {
         }
         return ResponseEntity
                 .created(uriComponentsBuilder.path("orders/failed").build("failed")).build();
+    }
+
+    @RequestMapping("")
+    public Iterable<Item> getAllItems(){
+        return itemRepo.findAll();
+    }
+
+    @PostMapping("/add")
+    public String addItem(@RequestBody Item item){
+        itemRepo.save(item);
+        return "Item added";
     }
 }

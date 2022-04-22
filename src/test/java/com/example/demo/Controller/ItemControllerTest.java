@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -27,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 class ItemControllerTest {
+
+    @Autowired
+    private MockMvc mvc;
 
     @MockBean
     private ItemRepo itemRepo;
@@ -38,14 +43,17 @@ class ItemControllerTest {
 
     @BeforeEach
     public void init(){
+        Item i0 = new Item(1L, "Hammare" , "-2020");
         Item i1 = new Item(1L, "Gräsklippare" , "-2020");
         Customer c1 = new Customer(1L, "Magnus" , "Gatan 3");
+        Item i2 = new Item(2L, "Spik" , "-2021");
+        Item i3 = new Item(3L, "Yxa" , "-2022");
         when(itemRepo.findItemByName("Gräsklippare")).thenReturn(i1);
         when(itemRepo.findById(1L)).thenReturn(Optional.of(i1));
         when(customerRepo.findById(1L)).thenReturn(Optional.of(c1));
+        when(itemRepo.findAll()).thenReturn(List.of(i0, i2, i3));
+
     }
-    @Autowired
-    private MockMvc mvc;
 
     @Test
     void getItemByName() throws Exception {
@@ -75,4 +83,18 @@ class ItemControllerTest {
                 .andExpect(MockMvcResultMatchers.header().exists("Location"))
                 .andExpect(MockMvcResultMatchers.header().string("Location", Matchers.containsString("failed")));
     }
+
+    @Test
+    void getAllItems() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/items").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[" +
+                        "{\"id\":1,\"name\":\"Hammare\",\"articleNr\":\"-2020\"}," +
+                        "{\"id\":2,\"name\":\"Spik\",\"articleNr\":\"-2021\"}," +
+                        "{\"id\":3,\"name\":\"Yxa\",\"articleNr\":\"-2022\"}" +
+                        "]")));
+
+    }
+
+
 }
