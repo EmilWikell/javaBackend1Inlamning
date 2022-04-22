@@ -97,5 +97,14 @@ class ItemControllerTest {
 
     }
 
+    @Test
+    void addItemTest() throws Exception{
+        mvc.perform(MockMvcRequestBuilders
+                .post("/items")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Hammare\",\"articleNr\": \"-2020}\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(equalTo("Item added")));
+    }
 
 }
